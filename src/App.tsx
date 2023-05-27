@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import { AddNewTransaction } from "./components/AddNewTransaction";
+import { BalanceView } from "./components/BalanceView";
+import { Header } from "./components/Header";
+import { History } from "./components/History";
+import { Container, Grid, Stack } from "@mui/material";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Container
+      maxWidth="sm"
+      sx={{ width: 600, height: 1000, backgroundColor: "primary.dark" }}
+    >
+      <Stack spacing={2}>
+        <Header />
+        <BalanceView balance={100} />
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <Stack>
+              <p>INCOME</p>
+              <p>$500.00</p>
+            </Stack>
+          </Grid>
+          <Grid item xs={4}>
+            <Stack>
+              <p>EXPENSE</p>
+              <p>$240.00</p>
+            </Stack>
+          </Grid>
+        </Grid>
+        <History />
+        <AddNewTransaction />
+      </Stack>
+    </Container>
+  );
 }
 
-export default App
+export default App;
