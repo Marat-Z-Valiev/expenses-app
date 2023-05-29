@@ -1,7 +1,7 @@
 import { getAuth } from "firebase/auth";
 import "./App.css";
 import { AddNewTransaction } from "./components/AddNewTransaction";
-import { BalanceView } from "./components/BalanceView";
+import { Balance } from "./components/Balance";
 import { Header } from "./components/Header";
 import { History } from "./components/History";
 import { Container, Grid, Stack } from "@mui/material";
@@ -13,6 +13,8 @@ import {
   useFirebaseApp,
 } from "reactfire";
 import { getDatabase } from "firebase/database";
+import { DataProvider } from "./context/DataContext";
+import { IncomeExpenses } from "./components/IncomeExpenses";
 
 function App() {
   const firestoreInstance = getFirestore(useFirebaseApp());
@@ -25,31 +27,20 @@ function App() {
     <AuthProvider sdk={auth}>
       <DatabaseProvider sdk={database}>
         <FirestoreProvider sdk={firestoreInstance}>
-          <Container
-            maxWidth="sm"
-            sx={{ width: 600, height: 1500, backgroundColor: "primary.dark" }}
-          >
-            <Stack spacing={2}>
-              <Header />
-              <BalanceView balance={100} />
-              <Grid container spacing={2}>
-                <Grid item xs={4}>
-                  <Stack>
-                    <p>INCOME</p>
-                    <p>$500.00</p>
-                  </Stack>
-                </Grid>
-                <Grid item xs={4}>
-                  <Stack>
-                    <p>EXPENSE</p>
-                    <p>$240.00</p>
-                  </Stack>
-                </Grid>
-              </Grid>
-              <History />
-              <AddNewTransaction />
-            </Stack>
-          </Container>
+          <DataProvider>
+            <Container
+              maxWidth="lg"
+              sx={{ width: 600, height: 2500, backgroundColor: "primary.dark" }}
+            >
+              <Stack spacing={2}>
+                <Header />
+                <Balance />
+                <IncomeExpenses />
+                <History />
+                <AddNewTransaction />
+              </Stack>
+            </Container>
+          </DataProvider>
         </FirestoreProvider>
       </DatabaseProvider>
     </AuthProvider>

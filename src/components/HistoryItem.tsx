@@ -1,6 +1,5 @@
 import { Button } from "@mui/material";
-import { collection, deleteDoc, doc, setDoc } from "firebase/firestore";
-import { useFirestore } from "reactfire";
+import { useDataProvider } from "../context/DataContext";
 
 type HistoryItemProps = {
   id: string;
@@ -9,22 +8,16 @@ type HistoryItemProps = {
 };
 
 export const HistoryItem = ({ id, itemText, itemAmount }: HistoryItemProps) => {
-  const transactionsCollectionRef = collection(useFirestore(), "transactions");
+  const { deleteTransaction } = useDataProvider();
 
-  const document = doc(transactionsCollectionRef, id);
-
-  const deleteItem = async () => {
-    try {
-      await deleteDoc(document);
-    } catch (error) {
-      console.error("Error adding document:", error);
-    }
+  const onSubmit = () => {
+    deleteTransaction(id);
   };
   return (
     <>
       <p>{itemText}</p>
       <p>{itemAmount}</p>
-      <Button onClick={deleteItem}>Delete</Button>
+      <Button onClick={onSubmit}>Delete</Button>
     </>
   );
 };

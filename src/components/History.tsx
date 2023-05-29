@@ -1,38 +1,42 @@
-import { Container, Stack } from "@mui/material";
+import { Box, CircularProgress, Container, Stack } from "@mui/material";
 import { HistoryItem } from "./HistoryItem";
-import { collection, orderBy, query } from "firebase/firestore";
-import { useFirestore, useFirestoreCollectionData } from "reactfire";
+import { TransactionData, useDataProvider } from "../context/DataContext";
 
 export const History = () => {
-  const transactionsCollection = collection(useFirestore(), "transactions");
+  const { transactions } = useDataProvider();
 
-  const transactionsQuery = query(
-    transactionsCollection,
-    orderBy("name", "asc")
-  );
+  const totalAmount =
+    transactions.data &&
+    transactions.data.reduce((acc: any, transaction: TransactionData) => {
+      const amount = parseFloat(transaction.amount); // Convert amount to a number
 
-  const { status, data: transactions = [] } = useFirestoreCollectionData(
-    transactionsQuery,
-    {
-      idField: "id",
-    }
-  );
+      // Check if the amount is a valid number
+      if (!isNaN(amount)) {
+        return acc + amount;
+      }
 
-  console.log("status ", status, transactions);
+      return acc; // Ignore invalid amounts (NaN)
+    }, 0);
 
-  if (status === "loading") {
-    return <span>loading...</span>;
+  console.log("totalAmount ", totalAmount);
+
+  if (transactions.status === "loading") {
+    return (
+      <Box sx={{ display: "flex" }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
     <Container>
       <h3>History</h3>
       <Stack>
-        {transactions.map((item) => (
+        {transactions.data.map((item: any) => (
           <HistoryItem
             key={item.id}
             id={item.id}
-            itemText={item.name}
+            itemText={item.text}
             itemAmount={item.amount}
           />
         ))}

@@ -1,28 +1,23 @@
 import { Button, Stack, TextField } from "@mui/material";
 import { useState } from "react";
-import { useFirestore } from "reactfire";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { useDataProvider } from "../context/DataContext";
 
 export const AddNewTransaction = () => {
-  const [{ name, amount }, setTransaction] = useState({
-    name: "",
-    amount: "",
-  });
+  const [text, setText] = useState("");
+  const [amount, setAmount] = useState("");
 
-  const transactionsCollectionRef = collection(useFirestore(), "transactions");
+  const { addTransaction } = useDataProvider();
 
-  const document = doc(transactionsCollectionRef);
+  const onSubmit = () => {
+    const newTransaction = {
+      text,
+      amount,
+    };
 
-  const addData = () => {
-    try {
-      setDoc(document, {
-        name: name,
-        amount: amount,
-      });
-      setTransaction({ name: "", amount: "" });
-    } catch (error) {
-      console.error("Error adding document:", error);
-    }
+    addTransaction(newTransaction);
+
+    setText("");
+    setAmount("");
   };
 
   return (
@@ -32,11 +27,9 @@ export const AddNewTransaction = () => {
         <TextField
           id="outlined-basic"
           label="Enter text..."
-          value={name}
+          value={text}
           variant="outlined"
-          onChange={(e) =>
-            setTransaction({ name: e.currentTarget.value, amount })
-          }
+          onChange={(e) => setText(e.target.value)}
         />
       </Stack>
       <Stack>
@@ -47,12 +40,10 @@ export const AddNewTransaction = () => {
           type="number"
           value={amount}
           variant="outlined"
-          onChange={(e) =>
-            setTransaction({ name, amount: e.currentTarget.value })
-          }
+          onChange={(e) => setAmount(e.target.value)}
         />
       </Stack>
-      <Button variant="contained" onClick={addData}>
+      <Button variant="contained" onClick={onSubmit}>
         Add transaction
       </Button>
     </Stack>
