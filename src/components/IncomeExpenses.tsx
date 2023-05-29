@@ -1,5 +1,19 @@
-import { Grid, Stack } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  styled,
+} from "@mui/material";
 import { TransactionData, useDataProvider } from "../context/DataContext";
+
+const Container = styled(Box)`
+  display: flex;
+  & > div {
+    flex: 1;
+    padding: 10px;
+  }
+`;
 
 export const IncomeExpenses = () => {
   const { transactions } = useDataProvider();
@@ -23,19 +37,19 @@ export const IncomeExpenses = () => {
       .reduce((acc: any, item: number) => (acc += item), 0) * -1;
 
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={4}>
-        <Stack>
-          <p>INCOME</p>
-          <p>{`${income ?? "0"}`}</p>
-        </Stack>
-      </Grid>
-      <Grid item xs={4}>
-        <Stack>
-          <p>EXPENSE</p>
-          <p>{`${expense ?? "0"}`}</p>
-        </Stack>
-      </Grid>
-    </Grid>
+    <Container>
+      <Card>
+        <CardContent>
+          <Typography>Income</Typography>
+          <Typography style={{ color: "green" }}>+${income}</Typography>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent>
+          <Typography>Expense</Typography>
+          <Typography style={{ color: "red" }}>-${expense}</Typography>
+        </CardContent>
+      </Card>
+    </Container>
   );
 };

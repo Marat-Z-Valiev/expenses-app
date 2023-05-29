@@ -1,4 +1,10 @@
+import { Box, styled, Typography } from "@mui/material";
 import { TransactionData, useDataProvider } from "../context/DataContext";
+
+const BalanceText = styled(Typography)`
+  font-size: 25px;
+  margin-bottom: 20px;
+`;
 
 export const Balance = () => {
   const { transactions } = useDataProvider();
@@ -16,8 +22,8 @@ export const Balance = () => {
     }, 0);
 
   return (
-    <>
-      <p>Your balance {`$${totalAmount ?? "0"}`}</p>
-    </>
+    <Box>
+      <BalanceText>Your balance {`$${totalAmount ?? "0"}`}</BalanceText>
+    </Box>
   );
 };

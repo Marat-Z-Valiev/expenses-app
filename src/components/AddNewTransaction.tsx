@@ -1,6 +1,11 @@
-import { Button, Stack, TextField } from "@mui/material";
+import { Button, Stack, TextField, Typography, styled } from "@mui/material";
 import { useState } from "react";
 import { useDataProvider } from "../context/DataContext";
+
+const NewTransactionText = styled(Typography)`
+  font-size: 25px;
+  margin-bottom: 20px;
+`;
 
 export const AddNewTransaction = () => {
   const [text, setText] = useState("");
@@ -22,6 +27,7 @@ export const AddNewTransaction = () => {
 
   return (
     <Stack spacing={2}>
+      <Typography variant="h5">Add New Transaction</Typography>
       <Stack>
         <p>Text</p>
         <TextField
@@ -33,7 +39,7 @@ export const AddNewTransaction = () => {
         />
       </Stack>
       <Stack>
-        <p>Text</p>
+        <p>Amount (negative - expense, positive - income)</p>
         <TextField
           id="outlined-basic"
           label="Enter amount..."

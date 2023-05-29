@@ -1,10 +1,10 @@
 import { getAuth } from "firebase/auth";
-import "./App.css";
+// import "./App.css";
 import { AddNewTransaction } from "./components/AddNewTransaction";
 import { Balance } from "./components/Balance";
 import { Header } from "./components/Header";
-import { History } from "./components/History";
-import { Container, Grid, Stack } from "@mui/material";
+import { History } from "./components/TransactionsHistory";
+import { Box, Container, Stack, Typography, styled } from "@mui/material";
 import { getFirestore } from "firebase/firestore";
 import {
   FirestoreProvider,
@@ -23,23 +23,32 @@ function App() {
   const database = getDatabase(app);
   const auth = getAuth(app);
 
+  const Component = styled(Box)`
+  background: #FFF;
+  padding: 10px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  width: 800px;
+}
+`;
+
   return (
     <AuthProvider sdk={auth}>
       <DatabaseProvider sdk={database}>
         <FirestoreProvider sdk={firestoreInstance}>
           <DataProvider>
-            <Container
-              maxWidth="lg"
-              sx={{ width: 600, height: 2500, backgroundColor: "primary.dark" }}
-            >
-              <Stack spacing={2}>
-                <Header />
-                <Balance />
-                <IncomeExpenses />
-                <History />
-                <AddNewTransaction />
-              </Stack>
-            </Container>
+            <Component>
+              <Box>
+                <Stack spacing={2}>
+                  <Header />
+                  <Balance />
+                  <IncomeExpenses />
+                  <History />
+                  <AddNewTransaction />
+                </Stack>
+              </Box>
+            </Component>
           </DataProvider>
         </FirestoreProvider>
       </DatabaseProvider>

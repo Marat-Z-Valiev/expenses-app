@@ -1,3 +1,11 @@
+import { styled, Typography } from "@mui/material";
+
 export const Header = () => {
-  return <h2>Expense Tracker</h2>;
+  const Header = styled(Typography)`
+    margin: 10px 0;
+    color: blue;
+    font-size: 36px;
+    text-transform: uppercase;
+  `;
+  return <Header>Expense Tracker</Header>;
 };
