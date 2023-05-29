@@ -38,8 +38,6 @@ export const DataProvider = ({ children }: any) => {
     idField: "id",
   });
 
-  console.log("data ", data);
-
   const addTransaction = (itemData: TransactionData) => {
     return setDoc(doc(transactionsCollectionRef), {
       ...itemData,
