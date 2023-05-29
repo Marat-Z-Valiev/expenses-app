@@ -49,7 +49,11 @@ export const AddNewTransaction = () => {
           onChange={(e) => setAmount(e.target.value)}
         />
       </Stack>
-      <Button variant="contained" onClick={onSubmit}>
+      <Button
+        variant="contained"
+        disabled={!amount || !text}
+        onClick={onSubmit}
+      >
         Add transaction
       </Button>
     </Stack>
