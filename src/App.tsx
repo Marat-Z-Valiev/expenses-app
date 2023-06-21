@@ -1,10 +1,9 @@
 import { getAuth } from "firebase/auth";
-// import "./App.css";
 import { AddNewTransaction } from "./components/AddNewTransaction";
 import { Balance } from "./components/Balance";
 import { Header } from "./components/Header";
 import { History } from "./components/TransactionsHistory";
-import { Box, Container, Stack, Typography, styled } from "@mui/material";
+import { Box, Stack, styled } from "@mui/material";
 import { getFirestore } from "firebase/firestore";
 import {
   FirestoreProvider,

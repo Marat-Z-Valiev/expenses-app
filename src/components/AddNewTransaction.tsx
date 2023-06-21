@@ -1,11 +1,6 @@
-import { Button, Stack, TextField, Typography, styled } from "@mui/material";
+import { Button, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useDataProvider } from "../context/DataContext";
-
-const NewTransactionText = styled(Typography)`
-  font-size: 25px;
-  margin-bottom: 20px;
-`;
 
 export const AddNewTransaction = () => {
   const [text, setText] = useState("");
